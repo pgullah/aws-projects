@@ -1,5 +1,6 @@
 #! /bin/bash
-source ../.env
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+source ${SCRIPT_DIR}/../.env
 
 aws iam create-role ${ROLE_NAME} --assume-role-policy-document 
 
