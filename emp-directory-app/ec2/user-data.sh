@@ -7,6 +7,6 @@ pip install -r requirements.txt
 yum -y install stress
 echo 'test data' > out.log
 export PHOTOS_BUCKET="${S3_BUCKET_NAME}"
-export AWS_DEFAULT_REGION=us-west-2
+export AWS_DEFAULT_REGION=${DEFAULT_REGION}
 export DYNAMO_MODE=on
 FLASK_APP=application.py /usr/local/bin/flask run --host=0.0.0.0 --port=8080
