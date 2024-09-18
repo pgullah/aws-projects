@@ -1,17 +1,11 @@
-#! /bin/bash
-instance_name='my-emp-directory'
-VPC='vpc'
-SUBNET='subnet-6789def0'
-security_group='my-emp-sg'
-SUB_PHOTOS_BUCKET="my-emp-bucket-123"
-IMAGE_ID='ami-1234567890abcdef0'
-INSTANCE_TYPE='t2.micro'
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+source ${SCRIPT_DIR}/../.env
 
+ # --key-name MyKeyPair \
 aws ec2 run-instances \
     --image-id ${IMAGE_ID} \
-    --instance-type t2.micro \
-    --key-name MyKeyPair \
-    --security-group-ids ${security_group} \
+    --instance-type ${INSTANCE_TYPE} \
+    --security-group-ids ${SECURITY_GROUP} \
     --subnet-id ${SUBNET} \
-    --count 1 \
-    --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${instance_name}}]"
+    --count ${INSTANCE_COUNT} \
+    --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${INSTANCE_NAME}}]"
