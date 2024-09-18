@@ -1,0 +1,17 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowS3ReadAccess",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::114123535725:role/S3DynamoDBFullAccessRole"
+            },
+            "Action": "s3:PutObject",
+            "Resource": [
+                "arn:aws:s3:::my-emp-bucket-123",
+                "arn:aws:s3:::my-emp-bucket-123/*"
+            ]
+        }
+    ]
+}
