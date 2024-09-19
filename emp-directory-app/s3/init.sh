@@ -1,4 +1,19 @@
 #!/usr/bin/env bash
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+source ${SCRIPT_DIR}/../.includes/template.sh
+source ${SCRIPT_DIR}/../.env
 
-${SCRIPT_DIR}/create-bucket.sh
+policy_json=$(_apply_template ${SCRIPT_DIR}/bucket-policy.json 'ACCOUNT_ID' 'S3_BUCKET_NAME')
+
+# echo $policy_file
+
+# create bucket
+aws s3api create-bucket \
+    --bucket ${S3_BUCKET_NAME} \
+    --region ${DEFAULT_REGION} \
+    --create-bucket-configuration LocationConstraint=${DEFAULT_REGION}
+
+# apply policy
+aws s3api put-bucket-policy \
+    --bucket ${S3_BUCKET_NAME} \
+    --policy "${policy_json}"

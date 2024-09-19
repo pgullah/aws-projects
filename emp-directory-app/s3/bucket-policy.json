@@ -5,12 +5,12 @@
             "Sid": "AllowS3ReadAccess",
             "Effect": "Allow",
             "Principal": {
-                "AWS": "arn:aws:iam::114123535725:role/S3DynamoDBFullAccessRole"
+                "AWS": "arn:aws:iam::%%ACCOUNT_ID%%:role/S3DynamoDBFullAccessRole"
             },
             "Action": "s3:PutObject",
             "Resource": [
-                "arn:aws:s3:::my-emp-bucket-123",
-                "arn:aws:s3:::my-emp-bucket-123/*"
+                "arn:aws:s3:::%%S3_BUCKET_NAME%%",
+                "arn:aws:s3:::%%S3_BUCKET_NAME%%/*"
             ]
         }
     ]
