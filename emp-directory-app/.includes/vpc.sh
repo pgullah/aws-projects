@@ -16,6 +16,10 @@ function _get_all_subnets_by_vpc_name() {
     _get_all_subnets_by_vpc_id $vpc_id
 }
 
+function _get_igateway_by_name() {
+    aws ec2 describe-internet-gateways --filters "Name=tag:Name,Values=$1" --query "InternetGateways[*].InternetGatewayId"
+}
+
 function _get_igateway_by_vpc_id() {
     aws ec2 describe-internet-gateways --filters "Name=attachment.vpc-id,Values=$1" --query "InternetGateways[*].InternetGatewayId"
 }

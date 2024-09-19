@@ -1,5 +1,5 @@
-iam/init.sh
-# network/init.sh
+# iam/init.sh
+network/init.sh
 # s3/init.sh
 # ec2/init.sh
 
