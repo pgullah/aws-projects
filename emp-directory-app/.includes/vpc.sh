@@ -80,11 +80,3 @@ function _delete_routetable_by_vpc_id() {
 function _delete_routetable_by_id() {
     aws ec2 delete-route-table --route-table-id $1
 }
-
-# function _add_vpc() {
-#     # aws ec2 create-vpc --cidr ${CIDR_BLOCK} --tag-specifications "ResourceType=vpc, Tags=[{Key=Name,Value=${VPC_NAME}}]"
-# }
-
-# function _add_subnet() {
-
-# }
