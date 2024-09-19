@@ -4,7 +4,7 @@ source ${SCRIPT_DIR}/../.includes/vpc.sh
 source ${SCRIPT_DIR}/../.env
 
 # create vpc & subnets
-aws ec2 create-vpc --cidr ${CIDR_BLOCK_VPC} --tag-specifications "ResourceType=vpc, Tags=[{Key=Name,Value=${VPC_NAME}}]"
+aws ec2 create-vpc --cidr ${VPC_CIDR} --tag-specifications "ResourceType=vpc, Tags=[{Key=Name,Value=${VPC_NAME}}]"
 
 VPC_ID=$(_get_vpc_by_name ${VPC_NAME})
 aws ec2 create-subnet \
