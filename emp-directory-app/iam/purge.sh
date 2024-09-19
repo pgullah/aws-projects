@@ -6,11 +6,9 @@ source ${SCRIPT_DIR}/../.env
 echo "Detaching policies for the role: ${ROLE_NAME}"
 aws iam remove-role-from-instance-profile --instance-profile-name ${EC2_INSTANCE_PROFILE_NAME} --role-name ${ROLE_NAME}
 for policy_arn in ${ROLE_POLICY_ARNS[@]}; do
-    # echo "Detach policy fro role: $ROLE_NAME with $policy_arn"
-    # echo "
     aws iam detach-role-policy --role-name ${ROLE_NAME} --policy-arn ${policy_arn}
-    # "
 done
+
 echo "Deleteing role: ${ROLE_NAME}"
 aws iam delete-role --role-name ${ROLE_NAME}
 
