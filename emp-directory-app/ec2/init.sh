@@ -9,10 +9,6 @@ echo "### Initializing EC2 Artifacts ###"
 
 # create security groups
 vpc_id=$(_get_vpc_by_name ${VPC_NAME})
-aws ec2 create-security-group \
-    --group-name ${SECURITY_GROUP} \
-    --description "Security group for the web app" \
-    --vpc-id ${vpc_id}
 
 user_data=$(_apply_template ${SCRIPT_DIR}/user-data.txt 'S3_BUCKET_NAME' 'DEFAULT_REGION')
 # create instances
@@ -29,9 +25,6 @@ instance_id=$(aws ec2 run-instances \
     --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${INSTANCE_NAME}}]" \
     --user-data "${user_data}" --query 'Instances[0].InstanceId' --output text)
 
-while [ "${instance_state}" != 'running' ];
-do
-    echo "waiting for instance to be up"
-    sleep 1
-    instance_state=$(_get_ec2_instance_state $instance_id)
-done
+_wait_for_ec2_instance_state ${instance_id} 'running'
+
+echo "Instance started successfully!"

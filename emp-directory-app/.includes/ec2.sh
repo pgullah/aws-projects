@@ -2,6 +2,10 @@ function _get_instances_by_name() {
     echo $(aws ec2 describe-instances --filters "Name=tag:Name,Values=$1" --query 'Reservations[*].Instances[*].InstanceId')
 }
 
+function _get_ec2_instance_by_name_state() {
+    echo $(aws ec2 describe-instances --filters "Name=tag:Name,Values=$1" "Name=instance-state-name,Values=$2" --query 'Reservations[*].Instances[*].InstanceId')
+}
+
 function _get_ec2_instance_state() {
     echo $(aws ec2 describe-instance-status --instance-id $1 --query "InstanceStatuses[*].InstanceState.Name")
 }
@@ -35,4 +39,23 @@ function _delete_ec2_security_groups_by_name() {
     for security_group_id in "${security_group_ids[@]}"; do
         aws ec2 delete-security-group --group-id $security_group_id
     done
+}
+
+function _wait_for_ec2_instance_state() {
+    instance_id=$1
+    target_state=$2
+    # defaults to 1 sec delay
+    sleep_delay=${3:-1}
+    # [ -z $instance_id ] && echo 'Please specify instanceId'; return 1;
+    # [ -z $target_state ] && echo 'Please specify the target state'; return 1;
+
+    current_state=$(_get_ec2_instance_state $instance_id)
+    echo ">>>>>>>>>> current_state: $current_state and target state: ${target_state}"
+    # while [ "${current_state}" != "${target_state}" ];
+    # do
+    #     echo "waiting for instance:$instance_id to be ${target_state}"
+    #     sleep ${sleep_delay}
+    #     current_state=$(_get_ec2_instance_state $instance_id)
+    #     echo ">>>>>>>>>> current_state: $current_state and target state: ${target_state}"
+    # done
 }
