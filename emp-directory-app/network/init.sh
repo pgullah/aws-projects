@@ -1,32 +1,19 @@
 #!/usr/bin/env bash
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-source ${SCRIPT_DIR}/../.includes/vpc.sh
+source ${SCRIPT_DIR}/../.includes/network.sh
 source ${SCRIPT_DIR}/../.env
 
+echo "### Initializing Networks Artifacts ###"
+
 # create vpc & subnets
-aws ec2 create-vpc --cidr ${VPC_CIDR} --tag-specifications "ResourceType=vpc, Tags=[{Key=Name,Value=${VPC_NAME}}]"
+_create_vpc ${VPC_CIDR} ${VPC_NAME}
+# aws ec2 create-vpc --cidr ${VPC_CIDR} --tag-specifications "ResourceType=vpc, Tags=[{Key=Name,Value=${VPC_NAME}}]"
 
 VPC_ID=$(_get_vpc_by_name ${VPC_NAME})
-aws ec2 create-subnet \
-    --vpc-id ${VPC_ID} \
-    --cidr-block ${SUBNET1_CIDR} \
-    --availability-zone ${SUBNET1_AZ} \
-    --tag-specifications "ResourceType=subnet,Tags=[{Key=Name,Value=${SUBNET1_TYPE}}]"
-aws ec2 create-subnet \
-    --vpc-id ${VPC_ID} \
-    --cidr-block ${SUBNET2_CIDR} \
-    --availability-zone ${SUBNET2_AZ} \
-    --tag-specifications "ResourceType=subnet,Tags=[{Key=Name,Value=${SUBNET2_TYPE}}]"
-aws ec2 create-subnet \
-    --vpc-id ${VPC_ID} \
-    --cidr-block ${SUBNET3_CIDR} \
-    --availability-zone ${SUBNET3_AZ} \
-    --tag-specifications "ResourceType=subnet,Tags=[{Key=Name,Value=${SUBNET3_TYPE}}]"
-aws ec2 create-subnet \
-    --vpc-id ${VPC_ID} \
-    --cidr-block ${SUBNET4_CIDR} \
-    --availability-zone ${SUBNET4_AZ} \
-    --tag-specifications "ResourceType=subnet,Tags=[{Key=Name,Value=${SUBNET4_TYPE}}]"
+_create_subnet ${VPC_ID} ${SUBNET1_CIDR} ${SUBNET1_AZ} ${SUBNET1_TYPE}
+_create_subnet ${VPC_ID} ${SUBNET2_CIDR} ${SUBNET2_AZ} ${SUBNET2_TYPE}
+_create_subnet ${VPC_ID} ${SUBNET3_CIDR} ${SUBNET3_AZ} ${SUBNET3_TYPE}
+_create_subnet ${VPC_ID} ${SUBNET4_CIDR} ${SUBNET4_AZ} ${SUBNET4_TYPE}
 
 
 # Create internet gateway

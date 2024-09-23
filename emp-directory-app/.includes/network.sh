@@ -11,6 +11,10 @@ function _get_all_subnets_by_vpc_id() {
     aws ec2 describe-subnets --filter "Name=vpc-id,Values=$1" --query 'Subnets[*].SubnetId'
 }
 
+function _get_subnet_by_vpc_id_cidr() {
+    aws ec2 describe-subnets --filter "Name=vpc-id,Values=$1" "Name=cidr-block,Values=$2" --query 'Subnets[*].SubnetId'
+}
+
 function _get_all_subnets_by_vpc_name() {
     vpc_id = $(_get_vpc_by_name $1)
     _get_all_subnets_by_vpc_id $vpc_id
@@ -31,6 +35,20 @@ function _get_routetables_vpc_id() {
 
 function _get_routtable_assoc_by_vpc_id() {
     aws ec2 describe-route-tables --filters "Name=vpc-id,Values=$1" --query "RouteTables[*].Associations[*].RouteTableAssociationId"
+}
+
+# cidr, vpc_name
+function _create_vpc() {
+    aws ec2 create-vpc --cidr ${VPC_CIDR} --tag-specifications "ResourceType=vpc, Tags=[{Key=Name,Value=${VPC_NAME}}]"
+}
+
+# vpcId, cidr_block, az, name
+function _create_subnet() {
+    aws ec2 create-subnet \
+    --vpc-id $1 \
+    --cidr-block $2 \
+    --availability-zone $3 \
+    --tag-specifications "ResourceType=subnet,Tags=[{Key=Name,Value=$4}]"
 }
 
 function _delete_vpc_by_id() {

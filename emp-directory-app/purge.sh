@@ -1,8 +1,8 @@
 #! /bin/bash
-# ec2/purge.sh
+ec2/purge.sh
 #s3/purge.sh
 network/purge.sh
-# iam/purge.sh
+iam/purge.sh
 
 
 

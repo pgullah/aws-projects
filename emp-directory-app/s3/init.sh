@@ -3,9 +3,9 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source ${SCRIPT_DIR}/../.includes/template.sh
 source ${SCRIPT_DIR}/../.env
 
-policy_json=$(_apply_template ${SCRIPT_DIR}/bucket-policy.json 'ACCOUNT_ID' 'S3_BUCKET_NAME')
+echo "### Initializing S3 Artifacts ###"
 
-# echo $policy_file
+policy_json=$(_apply_template ${SCRIPT_DIR}/bucket-policy.json 'ACCOUNT_ID' 'S3_BUCKET_NAME')
 
 # create bucket
 aws s3api create-bucket \
