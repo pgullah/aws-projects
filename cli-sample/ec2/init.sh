@@ -22,12 +22,13 @@ echo "Creating EC2 instance"
 instance_id=$(aws ec2 run-instances \
     --image-id ${IMAGE_ID} \
     --instance-type ${INSTANCE_TYPE} \
+    --iam-instance-profile Name=${EC2_INSTANCE_PROFILE_NAME} \
     --security-group-ids ${security_group_id} \
     --subnet-id "${subnet_id}" \
     --count ${INSTANCE_COUNT} \
     --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${INSTANCE_NAME}}]" \
     --user-data "${user_data}" --query 'Instances[0].InstanceId' \
-     ${associate_public_ip_flag} \
+    ${associate_public_ip_flag} \
      --output text)
 
 _wait_for_ec2_instance_state ${instance_id} 'running'

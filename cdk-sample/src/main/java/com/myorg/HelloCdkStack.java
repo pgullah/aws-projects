@@ -4,15 +4,11 @@ import software.amazon.awscdk.*;
 import software.amazon.awscdk.services.lambda.*;
 import software.constructs.Construct;
 
-import software.constructs.Construct;
 import software.amazon.awscdk.Stack;
 import software.amazon.awscdk.StackProps;
 // Import Lambda function
 
 
-import software.constructs.Construct;
-import software.amazon.awscdk.Stack;
-import software.amazon.awscdk.StackProps;
 // Import Lambda function
 import software.amazon.awscdk.services.lambda.Code;
 import software.amazon.awscdk.services.lambda.Function;
