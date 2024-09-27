@@ -1,0 +1,138 @@
+{
+    "Reservations": [
+        {
+            "Groups": [],
+            "Instances": [
+                {
+                    "AmiLaunchIndex": 0,
+                    "ImageId": "ami-0b45ae66668865cd6",
+                    "InstanceId": "i-09f97b1d9fa78f637",
+                    "InstanceType": "t2.micro",
+                    "LaunchTime": "2024-09-23T17:27:59.000Z",
+                    "Monitoring": {
+                        "State": "disabled"
+                    },
+                    "Placement": {
+                        "AvailabilityZone": "eu-west-2a",
+                        "GroupName": "",
+                        "Tenancy": "default"
+                    },
+                    "PrivateDnsName": "ip-10-0-1-93.eu-west-2.compute.internal",
+                    "PrivateIpAddress": "10.0.1.93",
+                    "ProductCodes": [],
+                    "PublicDnsName": "",
+                    "State": {
+                        "Code": 80,
+                        "Name": "stopped"
+                    },
+                    "StateTransitionReason": "User initiated (2024-09-23 17:28:56 GMT)",
+                    "SubnetId": "subnet-02a06a177b94fcbf8",
+                    "VpcId": "vpc-0bb1f7f7faa8a7e90",
+                    "Architecture": "x86_64",
+                    "BlockDeviceMappings": [
+                        {
+                            "DeviceName": "/dev/xvda",
+                            "Ebs": {
+                                "AttachTime": "2024-09-23T17:27:59.000Z",
+                                "DeleteOnTermination": true,
+                                "Status": "attached",
+                                "VolumeId": "vol-0759b2340e3482c59"
+                            }
+                        }
+                    ],
+                    "ClientToken": "6d53d821-1926-47f0-bcf6-b1a73823d277",
+                    "EbsOptimized": false,
+                    "EnaSupport": true,
+                    "Hypervisor": "xen",
+                    "NetworkInterfaces": [
+                        {
+                            "Attachment": {
+                                "AttachTime": "2024-09-23T17:27:59.000Z",
+                                "AttachmentId": "eni-attach-0a849b44002d044aa",
+                                "DeleteOnTermination": true,
+                                "DeviceIndex": 0,
+                                "Status": "attached",
+                                "NetworkCardIndex": 0
+                            },
+                            "Description": "",
+                            "Groups": [
+                                {
+                                    "GroupName": "my-emp-sg",
+                                    "GroupId": "sg-00021448f1b6aca45"
+                                }
+                            ],
+                            "Ipv6Addresses": [],
+                            "MacAddress": "06:7c:ca:e7:05:e1",
+                            "NetworkInterfaceId": "eni-01b3ce70e35ede67f",
+                            "OwnerId": "114123535725",
+                            "PrivateIpAddress": "10.0.1.93",
+                            "PrivateIpAddresses": [
+                                {
+                                    "Primary": true,
+                                    "PrivateIpAddress": "10.0.1.93"
+                                }
+                            ],
+                            "SourceDestCheck": true,
+                            "Status": "in-use",
+                            "SubnetId": "subnet-02a06a177b94fcbf8",
+                            "VpcId": "vpc-0bb1f7f7faa8a7e90",
+                            "InterfaceType": "interface"
+                        }
+                    ],
+                    "RootDeviceName": "/dev/xvda",
+                    "RootDeviceType": "ebs",
+                    "SecurityGroups": [
+                        {
+                            "GroupName": "my-emp-sg",
+                            "GroupId": "sg-00021448f1b6aca45"
+                        }
+                    ],
+                    "SourceDestCheck": true,
+                    "StateReason": {
+                        "Code": "Client.UserInitiatedShutdown",
+                        "Message": "Client.UserInitiatedShutdown: User initiated shutdown"
+                    },
+                    "Tags": [
+                        {
+                            "Key": "Name",
+                            "Value": "my-emp-directory"
+                        }
+                    ],
+                    "VirtualizationType": "hvm",
+                    "CpuOptions": {
+                        "CoreCount": 1,
+                        "ThreadsPerCore": 1
+                    },
+                    "CapacityReservationSpecification": {
+                        "CapacityReservationPreference": "open"
+                    },
+                    "HibernationOptions": {
+                        "Configured": false
+                    },
+                    "MetadataOptions": {
+                        "State": "applied",
+                        "HttpTokens": "required",
+                        "HttpPutResponseHopLimit": 2,
+                        "HttpEndpoint": "enabled",
+                        "HttpProtocolIpv6": "disabled",
+                        "InstanceMetadataTags": "disabled"
+                    },
+                    "EnclaveOptions": {
+                        "Enabled": false
+                    },
+                    "BootMode": "uefi-preferred",
+                    "PlatformDetails": "Linux/UNIX",
+                    "UsageOperation": "RunInstances",
+                    "UsageOperationUpdateTime": "2024-09-23T17:27:59.000Z",
+                    "PrivateDnsNameOptions": {
+                        "HostnameType": "ip-name",
+                        "EnableResourceNameDnsARecord": false,
+                        "EnableResourceNameDnsAAAARecord": false
+                    }
+                }
+            ],
+            "OwnerId": "114123535725",
+            "ReservationId": "r-023594c32b23a8bde"
+        }
+    ]
+}
