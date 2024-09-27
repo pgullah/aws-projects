@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 iam/init.sh
 network/init.sh
 # s3/init.sh
