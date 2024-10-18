@@ -5,4 +5,6 @@ source ${SCRIPT_DIR}/../.env
 echo "### Purging S3 Artifacts ###"
 
 # delete bucket
-aws s3api delete-bucket --bucket ${S3_BUCKET_NAME}
+# aws s3api delete-bucket --bucket ${S3_BUCKET_NAME}
+# force delete
+aws s3 rb s3://${S3_BUCKET_NAME} --force

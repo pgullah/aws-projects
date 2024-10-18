@@ -31,6 +31,8 @@ function _wait_for_ec2_instance_state() {
     target_state=$2
     # defaults to 1 sec delay
     sleep_delay=${3:-5}
+    timeout=${4:-180}
+    SECONDS=0
     # [ -z $instance_id ] && echo 'Please specify instanceId'; return 1;
     # [ -z $target_state ] && echo 'Please specify the target state'; return 1;
 
@@ -38,9 +40,15 @@ function _wait_for_ec2_instance_state() {
     # echo ">>>>>>>>>> current_state: $current_state and target state: ${target_state}"
     while [ "${current_state,,}" != "${target_state,,}" ];
     do
-        echo "waiting for instance:$instance_id state to be ${target_state}"
-        sleep ${sleep_delay}
-        current_state=$(_get_ec2_instance_state $instance_id)
-        # echo ">>>>>>>>>> current_state: $current_state and target state: ${target_state}"
+        if (( $SECONDS > $timeout ));
+        then
+            echo "Timeout occurred while waiting for instance state to be ${target_state}!"
+            break
+        else
+            echo "waiting for instance:$instance_id state to be ${target_state}"
+            sleep ${sleep_delay}
+            current_state=$(_get_ec2_instance_state $instance_id)
+            # echo ">>>>>>>>>> current_state: $current_state and target state: ${target_state}"
+        fi
     done
 }
