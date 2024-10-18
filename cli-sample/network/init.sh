@@ -19,12 +19,13 @@ rtable_id=$(_create_route_table ${vpc_id} ${ROUTE_TABLE_NAME})
 _create_route ${rtable_id} ${INET_GATEWAY_INGRESS_CIDR} ${igatway_id}
 
 echo "creating subnets"
-subnet_region1_public=$(_create_subnet ${vpc_id} ${SUBNET1_CIDR} ${SUBNET1_AZ} ${SUBNET1_TYPE})
-subnet_region1_private=$(_create_subnet ${vpc_id} ${SUBNET2_CIDR} ${SUBNET2_AZ} ${SUBNET2_TYPE})
-subnet_region2_public=$(_create_subnet ${vpc_id} ${SUBNET3_CIDR} ${SUBNET3_AZ} ${SUBNET3_TYPE})
-subnet_region2_private=$(_create_subnet ${vpc_id} ${SUBNET4_CIDR} ${SUBNET4_AZ} ${SUBNET4_TYPE})
+subnet_zone1_public=$(_create_subnet ${vpc_id} ${SUBNET1_CIDR} ${SUBNET1_AZ} ${SUBNET1_TYPE})
+subnet_zone1_private=$(_create_subnet ${vpc_id} ${SUBNET2_CIDR} ${SUBNET2_AZ} ${SUBNET2_TYPE})
+subnet_zone2_public=$(_create_subnet ${vpc_id} ${SUBNET3_CIDR} ${SUBNET3_AZ} ${SUBNET3_TYPE})
+subnet_zone2_private=$(_create_subnet ${vpc_id} ${SUBNET4_CIDR} ${SUBNET4_AZ} ${SUBNET4_TYPE})
 
-_update_routetable_with_subnet ${rtable_id} ${subnet_region1_public}
+_update_routetable_with_subnet ${rtable_id} ${subnet_zone1_public}
+_update_routetable_with_subnet ${rtable_id} ${subnet_zone2_public}
 
 # # ,{Key=attachment.vpc-id,Values=$vpc_id}
 echo "creating security group for EC2 instance"

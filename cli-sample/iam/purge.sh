@@ -13,8 +13,8 @@ for policy_arn in ${ROLE_POLICY_ARNS[@]}; do
     aws iam detach-role-policy --role-name ${ROLE_NAME} --policy-arn ${policy_arn}
 done
 
-echo "Deleteing role: ${ROLE_NAME}"
+echo "Deleting role: ${ROLE_NAME}"
 aws iam delete-role --role-name ${ROLE_NAME}
 
-echo "Deleteing instance profile: ${EC2_INSTANCE_PROFILE_NAME}"
+echo "Deleting instance profile: ${EC2_INSTANCE_PROFILE_NAME}"
 aws iam delete-instance-profile --instance-profile-name ${EC2_INSTANCE_PROFILE_NAME}

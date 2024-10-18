@@ -15,22 +15,26 @@ user_data=$(_apply_template ${SCRIPT_DIR}/user-data.txt 'S3_BUCKET_NAME' 'DEFAUL
 # create instances
  # --key-name MyKeyPair \
 security_group_id=$(_get_security_group_by_name ${SECURITY_GROUP})
-subnet_id=$(_get_subnet_id_by_vpc_id_cidr ${vpc_id} ${SUBNET1_CIDR})
-associate_public_ip_flag=$(_choose_if "${ENABLE_INSTANCE_PUBLIC_IP}" 'true' '--associate-public-ip-address' '--no-associate-public-ip-address')
 
-echo "Creating EC2 instance" 
-instance_id=$(aws ec2 run-instances \
-    --image-id ${IMAGE_ID} \
-    --instance-type ${INSTANCE_TYPE} \
-    --iam-instance-profile Name=${EC2_INSTANCE_PROFILE_NAME} \
-    --security-group-ids ${security_group_id} \
-    --subnet-id "${subnet_id}" \
-    --count ${INSTANCE_COUNT} \
-    --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${INSTANCE_NAME}}]" \
-    --user-data "${user_data}" --query 'Instances[0].InstanceId' \
-    ${associate_public_ip_flag} \
-     --output text)
+for subnet_cidr in ${INSTANCE_TARGET_SUBNETS[@]};
+do
+    subnet_id=$(_get_subnet_id_by_vpc_id_cidr ${vpc_id} ${subnet_cidr})
+    associate_public_ip_flag=$(_choose_if "${ENABLE_INSTANCE_PUBLIC_IP}" 'true' '--associate-public-ip-address' '--no-associate-public-ip-address')
 
-_wait_for_ec2_instance_state ${instance_id} 'running'
+    echo "Creating EC2 instance" 
+    instance_id=$(aws ec2 run-instances \
+        --image-id ${IMAGE_ID} \
+        --instance-type ${INSTANCE_TYPE} \
+        --iam-instance-profile Name=${EC2_INSTANCE_PROFILE_NAME} \
+        --security-group-ids ${security_group_id} \
+        --subnet-id "${subnet_id}" \
+        --count ${INSTANCE_COUNT} \
+        --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=${INSTANCE_NAME}}]" \
+        --user-data "${user_data}" --query 'Instances[0].InstanceId' \
+        ${associate_public_ip_flag} \
+        --output text)
 
-echo "Instance started successfully!"
+    _wait_for_ec2_instance_state ${instance_id} 'running'
+
+    echo "Instance started successfully!"
+done
