@@ -195,3 +195,37 @@ function _delete_security_groups_by_name() {
         aws ec2 delete-security-group --group-id $security_group_id
     done
 }
+
+function _get_elb_state() {
+    aws elbv2 describe-load-balancers --names $1 --query 'LoadBalancers[0].State.Code' --output text 
+}
+
+function _get_elb_arn() {
+    aws elbv2 describe-load-balancers --names $1 --query 'LoadBalancers[0].LoadBalancerArn'
+}
+
+function _wait_for_elb_state() {
+    elb_name=$1
+    target_state=$2
+    sleep_delay=${3:-30}
+    timeout=${4:-240}
+    SECONDS=0
+    # [ -z $instance_id ] && echo 'Please specify elb_name'; return 1;
+    # [ -z $target_state ] && echo 'Please specify the target state'; return 1;
+
+    current_state=$(_get_elb_state $elb_name)
+    # echo ">>>>>>>>>> current_state: $current_state and target state: ${target_state}"
+    while [ "${current_state,,}" != "${target_state,,}" ];
+    do
+        if (( $SECONDS > $timeout ));
+        then
+            echo "Timeout occurred while waiting for ELB state to be ${target_state}!"
+            break
+        else
+            echo "waiting for ELB: $elb_name state to be ${target_state}"
+            sleep ${sleep_delay}
+            current_state=$(_get_elb_state $elb_name)
+            # echo ">>>>>>>>>> current_state: $current_state and target state: ${target_state}"
+        fi
+    done
+}
